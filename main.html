@@ -61,7 +61,7 @@ namespace data {
 	};
 
 	function load() {
-		var file = Stream.openFile(System.home("savemeimage.json"), "ur");
+		var file = Stream.openFile(System.home("savememimage.json"), "ur");
 		if(!file) return;
 		v = parseData(file);
 			file.close();
@@ -70,7 +70,7 @@ namespace data {
 	}
 
 	function save() {
-		var file = Stream.openFile(System.home("savemeimage.json"), "uw");
+		var file = Stream.openFile(System.home("savememimage.json"), "uw");
 			file.printf("%s", JSON.stringify(v, " "));
 			file.close();
 	}
