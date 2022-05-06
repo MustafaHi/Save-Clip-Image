@@ -1,0 +1,102 @@
+﻿<html>
+<header>
+	<title>Save-Mem-Image 1.0</title>
+</header>
+<body>
+	<button id="save">SAVE</button>
+	<div id="images"></div>
+	<a>github.com/MustafaHi/Save-Mem-Image</a>
+</body>
+
+<style>
+body {
+	flow: vertical;
+}
+#save {
+	width: *;
+}
+
+#images {
+	size: *;
+	margin: 1em 0;
+	padding-right: 6dip;
+	box-sizing: padding-box;
+	flow: vertical;
+	overflow-y: scroll;
+}
+
+img {
+	display: block;
+	margin: 1em 0;
+	width: *;
+	border: 1px solid blue;
+}
+a {
+	display: block;
+}
+</style>
+
+<script type="text/tiscript">
+event click $(#save) {
+	var image= view.clipboard(#get, #picture); if (!image) return;
+	var file = image.toBytes(symbol(data.v.format), data.v.quality);
+	var name = file.crc32() + "." + data.v.format;
+	var (x,y) = data.v.images.find(i => i == name); // index, value;
+	if (x != -1) return;
+		file.save(data.v.location + name);
+	addImage(name);
+}
+
+function addImage(url) {
+	$(#images).$prepend(<img src="{data.v.location + url}">);
+	data.add(url);
+}
+
+namespace data {
+	var v = {
+		format: "png",
+		quality: 100,
+		location: System.home(),
+		images: []
+	};
+
+	function load() {
+		var file = Stream.openFile(System.home("savemeimage.json"), "ur");
+		if(!file) return;
+		v = parseData(file);
+			file.close();
+		var images = v.images.map(:n: String.$(<img src="{data.v.location + n}">));
+		$(#images).prepend(images.join(""));
+	}
+
+	function save() {
+		var file = Stream.openFile(System.home("savemeimage.json"), "uw");
+			file.printf("%s", JSON.stringify(v, " "));
+			file.close();
+	}
+
+	function add(url) {
+		v.images.unshift(url);
+		save();
+	}
+}
+
+event click $(a)
+{
+	Sciter.launch("https://github.com/MustafaHi/Save-Mem-Image");
+}
+
+event doubleclick $(img)
+{
+	//var image = Bytes.load(this.@#src);
+	//view.clipboard(#put, Image.fromBytes(image));
+	view.clipboard(#put, { file: [this.@#src] });
+}
+
+self.ready = function() {
+	view.move(1200, 300, 400, 600);
+	data.load();
+	$(#save).postEvent("click");
+}
+</script>
+</html>
