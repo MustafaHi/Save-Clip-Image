@@ -1,5 +1,5 @@
 # Save-Mem-Image
-app saves image from memory to disk (because s*** OS)
+app saves image from clipboard to disk (because s*** OS)
 
 ## Getting Started
 
