@@ -3,7 +3,7 @@ app saves image from clipboard to disk (because s*** OS)
 
 ## Getting Started
 
-- Download repo
+- [Download](https://github.com/MustafaHi/Save-Mem-Image/archive/refs/heads/main.zip) repo
 - run installer for your platfrom
 - run SaveMemImage executable
 
