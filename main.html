@@ -1,11 +1,11 @@
 ﻿<html>
 <header>
-	<title>Save-Mem-Image 1.0</title>
+	<title>Save-Clip-Image 1.1</title>
 </header>
 <body>
 	<button id="save">SAVE</button>
 	<div id="images"></div>
-	<a>github.com/MustafaHi/Save-Mem-Image</a>
+	<a>github.com/MustafaHi/Save-Clip-Image</a>
 </body>
 
 <style>
@@ -48,7 +48,7 @@ event click $(#save) {
 }
 
 function addImage(url) {
-	$(#images).$prepend(<img src="{data.v.location + url}">);
+	$(#images).$prepend(<img src="{URL.fromPath(data.v.location + url)}">);
 	data.add(url);
 }
 
@@ -61,16 +61,17 @@ namespace data {
 	};
 
 	function load() {
-		var file = Stream.openFile(System.home("savememimage.json"), "ur");
+		var file = Stream.openFile(System.home("saveclipimage.json"), "ur");
 		if(!file) return;
 		v = parseData(file);
 			file.close();
-		var images = v.images.map(:n: String.$(<img src="{data.v.location + n}">));
+		if (!v.location) v.location = System.home();
+		var images = v.images.map(:n: String.$(<img src="{URL.fromPath(data.v.location + n)}">));
 		$(#images).prepend(images.join(""));
 	}
 
 	function save() {
-		var file = Stream.openFile(System.home("savememimage.json"), "uw");
+		var file = Stream.openFile(System.home("saveclipimage.json"), "uw");
 			file.printf("%s", JSON.stringify(v, " "));
 			file.close();
 	}
@@ -83,14 +84,14 @@ namespace data {
 
 event click $(a)
 {
-	Sciter.launch("https://github.com/MustafaHi/Save-Mem-Image");
+	Sciter.launch("https://github.com/MustafaHi/Save-Clip-Image");
 }
 
 event doubleclick $(img)
 {
 	//var image = Bytes.load(this.@#src);
 	//view.clipboard(#put, Image.fromBytes(image));
-	view.clipboard(#put, { file: [this.@#src] });
+	view.clipboard(#put, { file: [URL.toPath(this.@#src)] });
 }
 
 self.ready = function() {
