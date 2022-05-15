@@ -1,6 +1,6 @@
-﻿<html>
+<html>
 <header>
-	<title>Save-Clip-Image 1.1</title>
+	<title>Save-Clip-Image 1.2</title>
 </header>
 <body>
 	<button id="save">SAVE</button>
@@ -37,6 +37,7 @@ a {
 </style>
 
 <script type="text/tiscript">
+view.caption = self[0][0].value;
 event click $(#save) {
 	var image= view.clipboard(#get, #picture); if (!image) return;
 	var file = image.toBytes(symbol(data.v.format), data.v.quality);
