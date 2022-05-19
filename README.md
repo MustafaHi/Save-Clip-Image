@@ -16,6 +16,7 @@ app saves image from clipboard to disk
 
 - save button to write image to disk with setting defind in `saveclipimage.json`
 - double click image to copy it
+- double click middle mouse to remove image
 
 </div>
 
