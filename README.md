@@ -14,7 +14,7 @@ app saves image from clipboard to disk
   
 ## Using
 
-- save button to write image to disk with setting defind in `saveclipimage.json`
+- save button to write image to disk with properties defined in `saveclipimage.json`
 - double click image to copy it
 - double click middle mouse to remove image
 
